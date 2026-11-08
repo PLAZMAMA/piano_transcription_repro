@@ -1,0 +1,6 @@
+.venv/
+__pycache__/
+reference/
+results/probs/
+results/train_*/
+*.log
