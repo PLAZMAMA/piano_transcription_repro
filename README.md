@@ -37,7 +37,9 @@ validated at small scale only; see "Training".
 uv venv --python 3.12 .venv && source .venv/bin/activate
 uv pip install torch numpy librosa mir_eval mido soundfile remotezip   # + torchlibrosa pandas h5py sox audioread scikit-learn for verify_against_reference.py
 curl -L -o "checkpoints/CRNN_note_F1=0.9677_pedal_F1=0.9186.pth" "https://zenodo.org/records/4034264/files/CRNN_note_F1=0.9677_pedal_F1=0.9186.pth?download=1"
-# MAESTRO v2.0.0 metadata + MIDI zip go to data/maestro/{maestro-v2.0.0.json,midi/}; audio:
+curl -L -o /tmp/maestro-midi.zip https://storage.googleapis.com/magentadata/datasets/maestro/v2.0.0/maestro-v2.0.0-midi.zip   # 57 MB: metadata + all MIDI
+unzip -q /tmp/maestro-midi.zip -d /tmp/maestro-midi && mkdir -p data/maestro/midi \
+  && mv /tmp/maestro-midi/maestro-v2.0.0/maestro-v2.0.0.{json,csv} data/maestro/ && mv /tmp/maestro-midi/maestro-v2.0.0/20* data/maestro/midi/
 python scripts/download_maestro.py --split test                 # all 178 pieces, 20.5 h, ~15 min
 python scripts/download_maestro.py --split train --limit 100    # seeded random subset for the training check
 python scripts/download_maestro.py --split validation --limit 10
